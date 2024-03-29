@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-// import axios from "axios";
+import "react-toastify/dist/ReactToastify.css";
 import userServices from "../../services/userservices.js";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -38,6 +39,7 @@ const Register = () => {
     } catch (error) {
       // Handle registration error (e.g., show error message to the user)
       console.log(error);
+      toast.error("Registration failed. Please try again.");
     }
   };
 
@@ -53,20 +55,20 @@ const Register = () => {
     onSubmit: async (values) => {
       try {
         // Call registerUser function with form values
-        const response = await registerUser(values);
-        if (response instanceof Error) {
-          // Handle registration error
-          console.error(response);
-          // You can also throw the error here if needed
-          throw new Error("Registration failed");
-        }
+        await registerUser(values);
+        
         // Redirect to the login page after successful registration
+        toast.success("Registration Successful", {
+          position: toast.POSITION.TOP_LEFT,
+        });
         navigate("/login");
       } catch (error) {
         console.error(error);
         // Handle registration error (e.g., show error message to the user)
+        toast.error("Registration failed. Please try again.");
       }
     },
+    
   });
 
   const handleChange = (event) => {
@@ -125,14 +127,15 @@ const Register = () => {
                                   placeholder="First Name"
                                   value={formik.values.firstName}
                                   onChange={formik.handleChange}
+                                  onBlur={formik.handleBlur} // Add onBlur event handler to trigger form validation
                                 />
                                 <label className="form-label">First Name</label>
                                 {formik.touched.firstName &&
-                                formik.errors.firstName ? (
-                                  <div className="invalid-feedback">
-                                    {formik.errors.firstName}
-                                  </div>
-                                ) : null}
+                                  formik.errors.firstName && ( // Use logical AND to conditionally render the error message
+                                    <div className="invalid-feedback">
+                                      {formik.errors.firstName}
+                                    </div>
+                                  )}
                               </div>
                             </div>
 
@@ -151,14 +154,15 @@ const Register = () => {
                                   placeholder="Last Name"
                                   value={formik.values.lastName}
                                   onChange={formik.handleChange}
+                                  onBlur={formik.handleBlur} // Add onBlur event handler to trigger form validation
                                 />
                                 <label className="form-label">Last Name</label>
                                 {formik.touched.lastName &&
-                                formik.errors.lastName ? (
-                                  <div className="invalid-feedback">
-                                    {formik.errors.lastName}
-                                  </div>
-                                ) : null}
+                                  formik.errors.lastName && ( // Use logical AND to conditionally render the error message
+                                    <div className="invalid-feedback">
+                                      {formik.errors.lastName}
+                                    </div>
+                                  )}
                               </div>
                             </div>
 
@@ -180,11 +184,12 @@ const Register = () => {
                                   required
                                 />
                                 <label className="form-label">Email</label>
-                                {formik.touched.email && formik.errors.email ? (
-                                  <div className="invalid-feedback">
-                                    {formik.errors.email}
-                                  </div>
-                                ) : null}
+                                {formik.touched.email &&
+                                  formik.errors.email && (
+                                    <div className="invalid-feedback">
+                                      {formik.errors.email}
+                                    </div>
+                                  )}
                               </div>
                             </div>
 
@@ -219,11 +224,11 @@ const Register = () => {
                                   ></i>
                                 </span>
                                 {formik.touched.password &&
-                                formik.errors.password ? (
-                                  <div className="invalid-feedback">
-                                    {formik.errors.password}
-                                  </div>
-                                ) : null}
+                                  formik.errors.password && (
+                                    <div className="invalid-feedback">
+                                      {formik.errors.password}
+                                    </div>
+                                  )}
                               </div>
                             </div>
 
@@ -232,7 +237,10 @@ const Register = () => {
                               <div className="form-check">
                                 <input
                                   className={`form-check-input ${
-                                    formik.errors.iAgree ? "is-invalid" : ""
+                                    formik.touched.iAgree &&
+                                    !formik.values.iAgree
+                                      ? "is-invalid"
+                                      : ""
                                   }`}
                                   type="checkbox"
                                   id="iAgree"
@@ -246,11 +254,12 @@ const Register = () => {
                                 >
                                   I agree to the terms and conditions
                                 </label>
-                                {formik.errors.iAgree && (
-                                  <div className="invalid-feedback">
-                                    {formik.errors.iAgree}
-                                  </div>
-                                )}
+                                {formik.touched.iAgree &&
+                                  !formik.values.iAgree && (
+                                    <div className="invalid-feedback">
+                                      You must agree to the terms and conditions
+                                    </div>
+                                  )}
                               </div>
                             </div>
 
