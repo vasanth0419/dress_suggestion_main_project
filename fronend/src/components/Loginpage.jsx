@@ -1,22 +1,64 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import "react-toastify/dist/ReactToastify.css";
+import userServices from "../../services/userservices.js";
 
 const Loginpage = () => {
-  const [formData, setFormData] = useState({
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+
+  // Initial values for form fields
+  const initialValues = {
     email: "",
     password: "",
     remember_me: false,
-  });
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Here you can perform any necessary validation or API calls before navigating
   };
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    const val = type === "checkbox" ? checked : value;
-    setFormData({ ...formData, [name]: val });
+  // Validation schema using Yup
+  const validationSchema = Yup.object().shape({
+    email: Yup.string()
+      .email("Invalid email address") // Email validation
+      .required("Email is required") // Required validation
+      .matches(/^\S+@\S+\.\S+$/, "Email must be valid"), // Exact validation
+    password: Yup.string()
+      .min(8, "Password must be at least 8 characters")
+      .max(20, "Password must be at most 20 characters")
+      .required("Password is required"),
+  });
+
+  // Formik hook for handling form state and submission
+  const formik = useFormik({
+    initialValues: initialValues,
+    validationSchema: validationSchema,
+    onSubmit: async (values) => {
+      try {
+        // Make the login API call
+        const response = await userServices.signin(values.email, values.password);
+  
+        // Check if the login was successful based on the response data
+        if (response.success) {
+          // If login is successful, you can perform any necessary actions, such as redirecting the user
+          navigate("/dashboard");
+          toast.success("Login successful!");
+        } else {
+          // If login failed, you can display an error message to the user
+          toast.error("Login failed. Please check your credentials.");
+        }
+      } catch (error) {
+        // If there's an error with the API call, you can handle it here
+        console.error("Error:", error);
+        toast.error("An error occurred while logging in. Please try again later.");
+      }
+    },
+  });
+  
+
+  // Function to toggle password visibility
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -30,10 +72,10 @@ const Loginpage = () => {
                 <div className="row g-0">
                   {/* Left Column: Image */}
                   <div className="col-12 col-md-6">
-                    <img
+                  <img
                       className="img-fluid rounded-start w-100 h-100 object-fit-cover"
                       loading="lazy"
-                      src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
+                      src="/img/login.jpg"
                       alt="Welcome back you've been missed!"
                     />
                   </div>
@@ -43,63 +85,86 @@ const Loginpage = () => {
                       <div className="card-body p-3 p-md-4 p-xl-5">
                         <div className="row">
                           <div className="col-12">
-                            <div className="mb-5">
-                              {/* Logo */}
-                              <div className="text-center mb-4">
-                                <a href="#!">
-                                  <img
-                                    src="/Logo.ico"
-                                    alt="BootstrapBrain Logo"
-                                    width="175"
-                                    height="70"
-                                  />
-                                </a>
-                              </div>
-                              <h4 className="text-center">Sign In</h4>
+                            {/* Logo */}
+                            <div className="text-center mb-4">
+                              <Link to="/">
+                                <img
+                                  src="/Logo.ico"
+                                  alt="BootstrapBrain Logo"
+                                  width="175"
+                                  height="70"
+                                />
+                              </Link>
                             </div>
+                            <h4 className="text-center">Sign In</h4>
                           </div>
                         </div>
 
                         {/* Login Form */}
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={formik.handleSubmit}>
                           <div className="row gy-3 overflow-hidden">
                             {/* Email Input */}
                             <div className="col-12">
                               <div className="form-floating mb-3">
                                 <input
                                   type="email"
-                                  className="form-control"
+                                  className={`form-control ${
+                                    formik.touched.email && formik.errors.email
+                                      ? "is-invalid"
+                                      : ""
+                                  }`}
                                   name="email"
-                                  id="email"
                                   placeholder="name@example.com"
-                                  value={formData.email}
-                                  onChange={handleChange}
+                                  value={formik.values.email}
+                                  onChange={formik.handleChange}
+                                  onBlur={formik.handleBlur}
                                   required
                                 />
-                                <label htmlFor="email" className="form-label">
-                                  Email
-                                </label>
+                                <label className="form-label">Email</label>
+                                {formik.touched.email &&
+                                  formik.errors.email && (
+                                    <div className="invalid-feedback">
+                                      {formik.errors.email}
+                                    </div>
+                                  )}
                               </div>
                             </div>
                             {/* Password Input */}
                             <div className="col-12">
-                              <div className="form-floating mb-3">
+                              <div className="form-floating mb-3 position-relative">
                                 <input
-                                  type="password"
-                                  className="form-control"
+                                  type={showPassword ? "text" : "password"}
+                                  className={`form-control pr-5 ${
+                                    formik.touched.password &&
+                                    formik.errors.password
+                                      ? "is-invalid"
+                                      : ""
+                                  }`}
                                   name="password"
-                                  id="password"
-                                  value={formData.password}
-                                  onChange={handleChange}
                                   placeholder="Password"
+                                  value={formik.values.password}
+                                  onChange={formik.handleChange}
+                                  onBlur={formik.handleBlur}
                                   required
                                 />
-                                <label
-                                  htmlFor="password"
-                                  className="form-label"
+                                <label className="form-label">Password</label>
+                                <span
+                                  className="password-toggle-icon position-absolute top-50 translate-middle-y"
+                                  style={{ right: "25px", cursor: "pointer" }}
+                                  onClick={togglePasswordVisibility}
                                 >
-                                  Password
-                                </label>
+                                  <i
+                                    className={`fas ${
+                                      showPassword ? "fa-eye-slash" : "fa-eye"
+                                    }`}
+                                  ></i>
+                                </span>
+                                {formik.touched.password &&
+                                  formik.errors.password && (
+                                    <div className="invalid-feedback">
+                                      {formik.errors.password}
+                                    </div>
+                                  )}
                               </div>
                             </div>
                             {/* Remember Me Checkbox */}
@@ -110,8 +175,8 @@ const Loginpage = () => {
                                   type="checkbox"
                                   name="remember_me"
                                   id="remember_me"
-                                  checked={formData.remember_me}
-                                  onChange={handleChange}
+                                  checked={formik.values.remember_me}
+                                  onChange={formik.handleChange}
                                 />
                                 <label
                                   className="form-check-label text-secondary"
@@ -124,13 +189,13 @@ const Loginpage = () => {
                             {/* Submit Button */}
                             <div className="col-12">
                               <div className="d-grid">
-                                {/* Navigate to Dashboard upon form submission */}
-                                <Link
-                                  to="/dashboard"
+                                {/* Use button type "submit" to trigger Formik handleSubmit */}
+                                <button
                                   className="btn btn-dark btn-lg"
+                                  type="submit"
                                 >
                                   Login now
-                                </Link>
+                                </button>
                               </div>
                             </div>
                           </div>
@@ -153,6 +218,7 @@ const Loginpage = () => {
                               </p>
                             </div>
                             <div className="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-center mt-5">
+                              {/* Forget Password Link */}
                               <Link to="/forgetpassword">Forget Password</Link>
                             </div>
                           </div>

@@ -15,9 +15,11 @@ const Register = () => {
     lastName: Yup.string().required("Last Name is required"),
     email: Yup.string()
       .email("Invalid email address")
-      .required("Email is required"),
+      .required("Email is required")
+      .matches(/^\S+@\S+\.\S+$/, "Email must be valid"), // Exact validation
     password: Yup.string()
       .min(8, "Password must be at least 8 characters")
+      .max(20, "Password must be at most 20 characters")
       .required("Password is required"),
     iAgree: Yup.boolean()
       .oneOf([true], "You must accept the terms and conditions")
@@ -39,7 +41,7 @@ const Register = () => {
     } catch (error) {
       // Handle registration error (e.g., show error message to the user)
       console.log(error);
-      toast.error("Registration failed. Please try again.");
+      
     }
   };
 
