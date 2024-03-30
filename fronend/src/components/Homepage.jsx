@@ -1,8 +1,7 @@
 import React from "react";
 import "./style.css/Homepage.css";
 import { Link } from "react-router-dom";
-// import Footer from "./layouts/Footer";
-
+import Footerpage from "./Footerpage";
 
 const Homepage = () => {
   return (
@@ -42,9 +41,9 @@ const Homepage = () => {
             </div>
           </div>
         </div>
-        {/* footer page */}
       </div>
       {/* <Footer /> */}
+      <Footerpage />
     </div>
   );
 };

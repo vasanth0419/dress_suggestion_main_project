@@ -20,7 +20,7 @@ const Error = () => {
                   The page you are looking for was not found.
                 </p>
                 <Link
-                  to="/home"
+                  to="/"
                   className="btn bsb-btn-5xl btn-dark rounded-pill px-5 fs-6 m-0"
                 >
                   Back to Home

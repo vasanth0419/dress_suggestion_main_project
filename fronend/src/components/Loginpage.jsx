@@ -45,7 +45,7 @@ const Loginpage = () => {
         if (response) {
           // If login is successful, display success message and redirect the user
           toast.success(response.message);
-          navigate("/home");
+          navigate("/");
           resetForm();
         } else {
           // If login failed, display error message
@@ -214,13 +214,11 @@ const Loginpage = () => {
                               {/* Sign Up Link */}
                               <p className="mb-0 mt-5 text-secondary text-center">
                                 Don't have an account yet?{" "}
-                                <Link to="/register">
-                                  <a
-                                    href="#!"
-                                    className="link-primary text-decoration-none"
-                                  >
-                                    Sign up
-                                  </a>
+                                <Link
+                                  to="/register"
+                                  className="link-primary text-decoration-none"
+                                >
+                                  Sign up
                                 </Link>
                               </p>
                             </div>

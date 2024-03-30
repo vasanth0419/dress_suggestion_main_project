@@ -1,66 +1,124 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useFormik } from "formik"; // Import useFormik hook
+import * as Yup from "yup"; // Import Yup for validation
+import userServices from "../../services/userservices";
+import { toast } from "react-toastify";
 
 const ForgetPassword = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  const initialValues = {
+    email: "",
+  };
+
+  // Validation schema using Yup
+  const validationSchema = Yup.object().shape({
+    email: Yup.string()
+      .email("Invalid email address") // Email validation
+      .required("Email is required") // Required validation
+      .matches(/^\S+@\S+\.\S+$/, "Email must be valid"), // Exact validation
+  });
+
+  const formik = useFormik({
+    initialValues: initialValues,
+    validationSchema: validationSchema,
+    onSubmit: async (values) => {
+      try {
+        // Make the password reset API call
+        const response = await userServices.forgetpassword(values.email);
+
+        // Check if the response exists
+        if (response) {
+          // If password reset request is successful, display success message and redirect the user
+          toast.success(response.data.message);
+          navigate("/resetpassword");
+        } else {
+          // If there's an error, display error message
+          toast.error(
+            "Failed to request password reset. Please try again later."
+          );
+        }
+      } catch (error) {
+        // If there's an error with the API call, handle it here
+        console.error("Error:", error);
+        toast.error("An error occurred. Please try again later.");
+      }
+    },
+  });
+
+  // Function to toggle password visibility
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div>
       {/* Password Reset */}
-      <section class="bg-light py-3 py-md-5">
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4">
-              <div class="card border border-light-subtle rounded-3 shadow-sm">
-                <div class="card-body p-3 p-md-4 p-xl-5">
-                  <div class="text-center mb-3">
-                    <a href="#!">
+      <section className="bg-light py-3 py-md-5">
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4">
+              <div className="card border border-light-subtle rounded-3 shadow-sm">
+                <div className="card-body p-3 p-md-4 p-xl-5">
+                  <div className="text-center mb-3">
+                    <Link to="/">
                       <img
                         src="/Logo.ico"
                         alt="Logo"
                         width="175"
                         height="100"
                       />
-                    </a>
+                    </Link>
                   </div>
-                  <h2 class="fs-6 fw-normal text-center text-secondary mb-4">
+                  <h2 className="fs-6 fw-normal text-center text-secondary mb-4">
                     Provide the email address associated with your account to
                     recover your password.
                   </h2>
-                  <form action="#!">
-                    <div class="row gy-2 overflow-hidden">
-                      <div class="col-12">
-                        <div class="form-floating">
+                  <form onSubmit={formik.handleSubmit}>
+                    <div className="row gy-2 overflow-hidden">
+                      <div className="col-12">
+                        <div className="form-floating mb-3">
                           <input
                             type="email"
-                            class="form-control"
+                            className={`form-control ${
+                              formik.touched.email && formik.errors.email
+                                ? "is-invalid"
+                                : ""
+                            }`}
                             name="email"
-                            id="email"
                             placeholder="name@example.com"
+                            value={formik.values.email}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
                             required
                           />
-                          <label for="email" class="form-label">
-                            Email
-                          </label>
+                          <label className="form-label">Email</label>
+                          {formik.touched.email && formik.errors.email && (
+                            <div className="invalid-feedback">
+                              {formik.errors.email}
+                            </div>
+                          )}
                         </div>
                       </div>
-                      <div class="col-12">
-                        <div class="d-grid my-3">
-                          <button class="btn btn-dark btn-lg" type="submit">
-                            Forget Password
+                      <div className="col-12">
+                        <div className="d-grid my-3">
+                          <button type="submit" className="btn btn-dark btn-lg">
+                            Reset Password
                           </button>
                         </div>
                       </div>
-                      <div class="col-12">
-                        <div class="d-flex gap-2 justify-content-around">
+                      <div className="col-12">
+                        <div className="d-flex gap-2 justify-content-around">
                           <Link
                             to="/login"
-                            class="link-secondary text-decoration-none"
+                            className="link-secondary text-decoration-none"
                           >
                             Log In
                           </Link>
-
                           <Link
                             to="/register"
-                            class="link-secondary text-decoration-none"
+                            className="link-secondary text-decoration-none"
                           >
                             Register
                           </Link>

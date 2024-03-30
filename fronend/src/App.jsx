@@ -3,25 +3,25 @@ import Homepage from "./components/Homepage";
 import Loginpage from "./components/Loginpage";
 import Navbar from "./components/Navbar";
 import Forgetpassword from "./components/Forgetpassword";
+import Resetpassword from "./components/Resetpassword";
 
 import Register from "./components/Register";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import Error from "./components/layouts/Error";
 
-// import Frontpage from "./components/layouts/Frontpage";
-
 const App = () => {
+  
   return (
     <div>
       <BrowserRouter>
         <Navbar />
-        {/* <Footer/> */}
+
         <Routes>
-          {/* <Route path="/" element={<Frontpage />} /> */}
           <Route path="/" element={<Homepage />} />
           <Route path="/login" element={<Loginpage />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgetPassword" element={<Forgetpassword />} />
+          <Route path="/resetpassword/:token" element={<Resetpassword />} />
 
           {/* error */}
           <Route path="*" element={<Error />} />

@@ -23,7 +23,16 @@ const userServices = {
     // send a POST request to the API
     return instance.post("/user/register", data);
   },
-
+  // forget password
+  forgetpassword: (email) => {
+    const data = { email };
+    return instance.post("/user/forgetpassword", data);
+  },
+  // reset password
+  resetpassword: async (token, newPassword) => {
+    const data = { token, newPassword };
+    return instance.put("/user/resetpassword/:token", data);
+  },
   // get the currently logged in user
   getUser: async () => {
     return protectedInstance.get("/user/getUser");
