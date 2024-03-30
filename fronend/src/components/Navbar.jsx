@@ -1,18 +1,12 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 import Button from "./layouts/Button";
 import { Menu, Search, User, LogIn, X, ShoppingCart } from "react-feather";
-
 
 const Navbar = () => {
   return (
     <div>
       <div className="container-fluid">
-        {/* Logo
-        <div className="d-flex text-center align-items-center justify-content-between p-3 d-none d-md-block">
-          <img src="/Logo.ico" height="100" width="120" alt="Company Logo" />
-        </div> */}
-
         {/* Navigation bar */}
         <nav className="navbar navbar-expand-md navbar-dark bg-dark">
           <div className="container">
@@ -75,8 +69,6 @@ const Navbar = () => {
                   <span className="text-white">Register</span>
                 </button>
               </Link>
-
-              
             </div>
           </div>
         </nav>
@@ -84,12 +76,6 @@ const Navbar = () => {
       </div>
     </div>
   );
-}
-// function NavLink({ children, to }) {
-//   return (
-//     <li className="hover:text-gray-800 text-gray-700 block px-4 py-2 truncate">
-//       <Link to={to}>{children}</Link>
-//     </li>
-//   );
-// }
-export default Navbar
+};
+
+export default Navbar;

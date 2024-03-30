@@ -12,6 +12,7 @@ import {
 const router = express.Router();
 
 router.get("/", userapi);
+
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.get("/getuserbyid/:userid", getUserById);

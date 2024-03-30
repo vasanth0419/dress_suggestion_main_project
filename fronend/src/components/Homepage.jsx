@@ -1,12 +1,13 @@
 import React from "react";
 import "./style.css/Homepage.css";
 import { Link } from "react-router-dom";
+// import Footer from "./layouts/Footer";
+
 
 const Homepage = () => {
   return (
     <div>
       <div className="container-fluid">
-        
         {/* 1st - content */}
 
         <div className="jumbotron pt-4 pb-1 text-white rounded bg-dark">
@@ -41,8 +42,9 @@ const Homepage = () => {
             </div>
           </div>
         </div>
-        <div></div>
+        {/* footer page */}
       </div>
+      {/* <Footer /> */}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import "react-toastify/dist/ReactToastify.css";
@@ -33,28 +33,35 @@ const Loginpage = () => {
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: validationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       try {
         // Make the login API call
-        const response = await userServices.signin(values.email, values.password);
-  
-        // Check if the login was successful based on the response data
-        if (response.success) {
-          // If login is successful, you can perform any necessary actions, such as redirecting the user
-          navigate("/dashboard");
-          toast.success("Login successful!");
+        const response = await userServices.signin(
+          values.email,
+          values.password
+        );
+
+        // Check if the response exists and if it contains a success property
+        if (response) {
+          // If login is successful, display success message and redirect the user
+          toast.success(response.message);
+          navigate("/home");
+          resetForm();
         } else {
-          // If login failed, you can display an error message to the user
-          toast.error("Login failed. Please check your credentials.");
+          // If login failed, display error message
+          toast.error(
+            response.message || "Login failed. Please check your credentials."
+          );
         }
       } catch (error) {
-        // If there's an error with the API call, you can handle it here
+        // If there's an error with the API call, handle it here
         console.error("Error:", error);
-        toast.error("An error occurred while logging in. Please try again later.");
+        toast.error(
+          "An error occurred while logging in. Please try again later."
+        );
       }
     },
   });
-  
 
   // Function to toggle password visibility
   const togglePasswordVisibility = () => {
@@ -72,7 +79,7 @@ const Loginpage = () => {
                 <div className="row g-0">
                   {/* Left Column: Image */}
                   <div className="col-12 col-md-6">
-                  <img
+                    <img
                       className="img-fluid rounded-start w-100 h-100 object-fit-cover"
                       loading="lazy"
                       src="/img/login.jpg"
@@ -189,13 +196,13 @@ const Loginpage = () => {
                             {/* Submit Button */}
                             <div className="col-12">
                               <div className="d-grid">
-                                {/* Use button type "submit" to trigger Formik handleSubmit */}
                                 <button
                                   className="btn btn-dark btn-lg"
                                   type="submit"
                                 >
                                   Login now
                                 </button>
+                                <ToastContainer />
                               </div>
                             </div>
                           </div>

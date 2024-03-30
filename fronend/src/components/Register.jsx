@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import "react-toastify/dist/ReactToastify.css";
 import userServices from "../../services/userservices.js";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -35,13 +35,9 @@ const Register = () => {
 
       // if the request is successful, log the response
       console.log(response);
-
-      // redirect to the login page
-      navigate("/login");
     } catch (error) {
       // Handle registration error (e.g., show error message to the user)
       console.log(error);
-      
     }
   };
 
@@ -58,19 +54,15 @@ const Register = () => {
       try {
         // Call registerUser function with form values
         await registerUser(values);
-        
-        // Redirect to the login page after successful registration
-        toast.success("Registration Successful", {
-          position: toast.POSITION.TOP_LEFT,
-        });
         navigate("/login");
+        // Redirect to the login page after successful registration
+        toast.success("Registration Successful");
       } catch (error) {
         console.error(error);
         // Handle registration error (e.g., show error message to the user)
         toast.error("Registration failed. Please try again.");
       }
     },
-    
   });
 
   const handleChange = (event) => {
@@ -274,6 +266,7 @@ const Register = () => {
                                 >
                                   Sign up
                                 </button>
+                                <ToastContainer />
                               </div>
                             </div>
                           </div>

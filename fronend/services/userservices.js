@@ -3,10 +3,10 @@ import { instance, protectedInstance } from "./instance.js";
 // define the authentication service
 const userServices = {
   // define the login method
-  signin: async (username, password) => {
+  signin: async (email, password) => {
     // define the data to be sent to the API
     const data = {
-      username,
+      email,
       password,
     };
     // send a POST request to the API
