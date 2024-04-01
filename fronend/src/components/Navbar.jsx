@@ -32,41 +32,14 @@ const Navbar = () => {
             <div className="collapse navbar-collapse" id="navbarNavDropdown">
               <ul className="navbar-nav mx-auto">
                 <li className="nav-item">
-                  <a className="nav-link mx-2" href="#">
+                  <Link className="nav-link mx-2" to="/">
                     Home
-                  </a>
+                  </Link>
                 </li>
-                <li className="nav-item dropdown">
-                  <div
-                    className="nav-link dropdown-toggle mx-2"
-                    id="navbarDropdown"
-                    role="button"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
+                <li className="nav-item">
+                  <Link className="nav-link mx-2" to="/trends">
                     Trends
-                  </div>
-                  <ul
-                    className="dropdown-menu"
-                    aria-labelledby="navbarDropdown"
-                  >
-                    <li>
-                      <Link className="dropdown-item" to="/">
-                        Option 1
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="/">
-                        Option 2
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="/">
-                        Option 3
-                      </Link>
-                    </li>
-                    {/* Add more dropdown items as needed */}
-                  </ul>
+                  </Link>
                 </li>
                 <li className="nav-item dropdown">
                   <div

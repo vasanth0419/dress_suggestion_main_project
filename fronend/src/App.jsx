@@ -8,6 +8,7 @@ import Resetpassword from "./components/Resetpassword";
 import Register from "./components/Register";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import Error from "./components/layouts/Error";
+import Trends from "./components/Trends";
 
 const App = () => {
   
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/forgetPassword" element={<Forgetpassword />} />
           <Route path="/resetpassword/:token" element={<Resetpassword />} />
+          <Route path="/trends" element={<Trends/>}/>
 
           {/* error */}
           <Route path="*" element={<Error />} />

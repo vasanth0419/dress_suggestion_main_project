@@ -8,6 +8,11 @@ const Homepage = () => {
     <div>
       <div className="container-fluid">
         {/* 1st - content */}
+        <div class="index-main-img">
+          <img src="./img/off-the-wall.jpg" alt="" />
+        </div>
+        <br />
+        {/* 2st - content */}
 
         <div className="jumbotron pt-4 pb-1 text-white rounded bg-dark">
           <div className="container">
@@ -39,6 +44,50 @@ const Homepage = () => {
                 />
               </div>
             </div>
+          </div>
+        </div>
+        <br />
+
+        {/* ///// */}
+        <div class="index-grid-img-1">
+          <Link>
+            <img src="./img/anton-levin-P8prss71psk-unsplash.jpg" alt="" />
+            <h4 class="info-of-img-below">For the Young, Wild & Stylish</h4>
+          </Link>
+          <Link>
+            <img src="./img/calvin-lupiya--yPg8cusGD8-unsplash.jpg" alt="" />
+            <h4 class="info-of-img-below">Just like your way to Conquer</h4>
+          </Link>
+          <Link>
+            <img src="./img/sun.jpg" alt="" />
+            <h4 class="info-of-img-below">Stands out like the Sun</h4>
+          </Link>
+        </div>
+        {/* //////// */}
+
+        <h2 class="head-of-offer">STYLES TO STEAL</h2>
+        <p class="para-of-offer">Inspired by influencer</p>
+
+        <div class="index-grid-img-3">
+          <div>
+            <a>
+              <img src="./img/girl1.png" alt="" />
+            </a>
+          </div>
+          <div>
+            <a>
+              <img src="./img/girl2.png" alt="" srcset="" />
+            </a>
+          </div>
+          <div>
+            <a>
+              <img src="./img/girl3.png" alt="" />
+            </a>
+          </div>
+          <div>
+            <a>
+              <img src="./img/girl4.png" alt="" srcset="" />
+            </a>
           </div>
         </div>
       </div>

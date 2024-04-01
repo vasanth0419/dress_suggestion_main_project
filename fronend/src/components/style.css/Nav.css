@@ -1,6 +1,25 @@
+.navbar{
+    position: fixed;
+    width: 100%;
+}
+
+.navbar-nav .nav-item.dropdown .dropdown-menu {
+  background-color: initial; /* Set initial background color */
+  
+  color: initial; /* Set initial text color */
+}
+
 .navbar-nav .nav-item.dropdown:hover .dropdown-menu {
   display: block;
+  background-color: rgb(
+    156,
+    153,
+    153
+  ); /* Change background color to black on hover */
+  color: rgb(61, 59, 59); /* Change text color to white on hover */
+  top: 40px; /* Adjust this value to move the dropdown menu down */
 }
+
 .nav-item.dropdown .dropdown-toggle::after {
   display: none;
 }
