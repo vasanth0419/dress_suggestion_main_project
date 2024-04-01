@@ -4,6 +4,7 @@ import {
   forgetPassword,
   getUserById,
   loginUser,
+  registerAdminUser,
   registerUser,
   resetPassword,
   userapi,
@@ -19,4 +20,5 @@ router.get("/getuserbyid/:userid", getUserById);
 router.post("/forgetpassword", forgetPassword);
 router.put("/resetpassword/:token", resetPassword);
 router.delete("/deleteuser/:userId", deleteUserById);
+router.post("/adminlogin", registerAdminUser);
 export default router;

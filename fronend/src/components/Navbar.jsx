@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Button from "./layouts/Button";
 import { Menu, Search, User, LogIn, X, ShoppingCart } from "react-feather";
+import "./style.css/Nav.css";
 
 const Navbar = () => {
   return (
@@ -31,24 +32,73 @@ const Navbar = () => {
             <div className="collapse navbar-collapse" id="navbarNavDropdown">
               <ul className="navbar-nav mx-auto">
                 <li className="nav-item">
-                  <Link className="nav-link mx-2" to="/">
+                  <a className="nav-link mx-2" href="#">
                     Home
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link mx-2" href="#">
-                    About
                   </a>
                 </li>
-                <li className="nav-item">
-                  <a className="nav-link mx-2" href="#">
-                    Women
-                  </a>
+                <li className="nav-item dropdown">
+                  <div
+                    className="nav-link dropdown-toggle mx-2"
+                    id="navbarDropdown"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    Trends
+                  </div>
+                  <ul
+                    className="dropdown-menu"
+                    aria-labelledby="navbarDropdown"
+                  >
+                    <li>
+                      <Link className="dropdown-item" to="/">
+                        Option 1
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to="/">
+                        Option 2
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to="/">
+                        Option 3
+                      </Link>
+                    </li>
+                    {/* Add more dropdown items as needed */}
+                  </ul>
                 </li>
-                <li className="nav-item">
-                  <a className="nav-link mx-2" href="#">
-                    Dress
-                  </a>
+                <li className="nav-item dropdown">
+                  <div
+                    className="nav-link dropdown-toggle mx-2"
+                    id="navbarDropdown"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    Dresses
+                  </div>
+                  <ul
+                    className="dropdown-menu"
+                    aria-labelledby="navbarDropdown"
+                  >
+                    <li>
+                      <Link className="dropdown-item" to="/">
+                        Option 1
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to="/">
+                        Option 2
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to="/">
+                        Option 3
+                      </Link>
+                    </li>
+                    {/* Add more dropdown items as needed */}
+                  </ul>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link mx-2" href="#">

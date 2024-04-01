@@ -200,3 +200,30 @@ export const deleteUserById = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+
+
+
+
+//admin user
+
+export const registerAdminUser = async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
+    const hashpassword = await bcrypt.hash(password, 10);
+
+    const newAdminUser = new User({
+      username,
+      email,
+      password: hashpassword,
+      isAdmin: true,
+    }); // Set isAdmin to true
+    await newAdminUser.save();
+
+    res.status(200).json({ message: "Admin user registered successfully" });
+  } catch (error) {
+    res.status(500).json({
+      error: "Internal server Error",
+    });
+  }
+};

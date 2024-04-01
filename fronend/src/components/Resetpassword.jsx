@@ -32,12 +32,12 @@ const Resetpassword = () => {
         const response = await userServices.resetPassword(token, newPassword);
 
         if (response && response.status === 200) {
-          toast.success("Password reset successful");
+          toast.success(response.data.message);
           setTimeout(() => {
             window.location.href = "/login"; // Redirect to login page
           }, 3000);
         } else {
-          toast.error("Your link has expired");
+          toast.error(response.data.message);
         }
       } catch (error) {
         console.error("An error occurred while resetting password:", error);

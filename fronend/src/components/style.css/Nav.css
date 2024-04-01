@@ -1,0 +1,6 @@
+.navbar-nav .nav-item.dropdown:hover .dropdown-menu {
+  display: block;
+}
+.nav-item.dropdown .dropdown-toggle::after {
+  display: none;
+}

@@ -32,7 +32,7 @@ const ForgetPassword = () => {
         if (response) {
           // If password reset request is successful, display success message and redirect the user
           toast.success(response.data.message);
-          navigate("/resetpassword");
+          navigate("/login");
         } else {
           // If there's an error, display error message
           toast.error(

@@ -7,7 +7,8 @@ const dressSchema = new mongoose.Schema({
   color: { type: String },
   price: { type: Number, required: true },
   quantity: { type: Number, default: 0 },
-  // Add any other fields relevant to your dress collection
+  description: { type: String },
+  image: { type: String },
 });
 
 const Dress = mongoose.model("Dress", dressSchema);
