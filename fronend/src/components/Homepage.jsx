@@ -2,6 +2,7 @@ import React from "react";
 import "./style.css/Homepage.css";
 import { Link } from "react-router-dom";
 import Footerpage from "./Footerpage";
+import Contactus from "./Contactus";
 
 const Homepage = () => {
   return (
@@ -92,6 +93,7 @@ const Homepage = () => {
         </div>
       </div>
       {/* <Footer /> */}
+      <Contactus/>
       <Footerpage />
     </div>
   );
