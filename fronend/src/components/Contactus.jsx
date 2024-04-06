@@ -1,124 +1,121 @@
-import React from "react";
+import React, { useState } from "react";
+import "./style.css/contactus.css";
 
 const Contactus = () => {
+  const [darkMode, setDarkMode] = useState(false);
+
+  const handleThemeToggle = (e) => {
+    setDarkMode(e.target.checked);
+    switchTheme(e);
+  };
+
+  const switchTheme = (e) => {
+    if (e.target.checked) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    } else {
+      document.documentElement.setAttribute("data-theme", "light");
+    }
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    validate(event);
+  };
+
+  const validate = (e) => {
+    e.preventDefault();
+    const name = document.getElementById("name");
+    const email = document.getElementById("email");
+    const message = document.getElementById("message");
+    const errorElement = document.getElementById("error");
+    const successMsg = document.getElementById("success-msg");
+
+    if (name.value.length < 3) {
+      errorElement.innerHTML =
+        "Your name should be at least 3 characters long.";
+      return false;
+    }
+
+    if (!(email.value.includes(".") && email.value.includes("@"))) {
+      errorElement.innerHTML = "Please enter a valid email address.";
+      return false;
+    }
+
+    if (!emailIsValid(email.value)) {
+      errorElement.innerHTML = "Please enter a valid email address.";
+      return false;
+    }
+
+    if (message.value.length < 15) {
+      errorElement.innerHTML = "Please write a longer message.";
+      return false;
+    }
+
+    errorElement.innerHTML = "";
+    successMsg.innerHTML =
+      "Thank you! I will get back to you as soon as possible.";
+
+    setTimeout(function () {
+      successMsg.innerHTML = "";
+      document.getElementById("contact-form").reset();
+    }, 6000);
+
+    return true;
+  };
+
+  const emailIsValid = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
   return (
-    <div className="container">
-      <section
-        className="u-clearfix u-container-align-center u-section-1"
-        id="carousel_439b"
-      >
-        <div className="u-clearfix u-sheet u-sheet-1">
-          <h2 className="u-align-center u-text u-text-default u-text-1">
-            We're here to support
-          </h2>
-          <p className="u-align-center u-text u-text-2">
-            Sample text. Click to select the Text Element.
-            <br />
-            Image from{" "}
-            <a
-              href="https://freepik.com"
-              className="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-palette-1-base u-btn-1"
-            >
-              Freepik
-            </a>
-          </p>
-          <div className="data-layout-selected u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
-            <div className="u-layout">
-              <div className="u-layout-row">
-                <div className="col-lg-6">
-                  <div className="custom-expanded u-form u-grey-5 u-form-1">
-                    <form
-                      action="https://forms.nicepagesrv.com/v2/form/process"
-                      className="u-clearfix u-form-spacing-20 u-form-vertical u-inner-form"
-                      source="email"
-                      name="form"
-                      style={{ padding: "30px" }}
-                    >
-                      <input
-                        type="hidden"
-                        id="siteId"
-                        name="siteId"
-                        value="6173881"
-                      />
-                      <input
-                        type="hidden"
-                        id="pageId"
-                        name="pageId"
-                        value="81066542"
-                      />
-                      <div className="mb-3">
-                        <label htmlFor="name-b064" className="form-label">
-                          Name
-                        </label>
-                        <input
-                          type="text"
-                          placeholder="Enter your Name"
-                          id="name-b064"
-                          name="name"
-                          className="form-control"
-                          required
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <label htmlFor="email-b064" className="form-label">
-                          Email
-                        </label>
-                        <input
-                          type="email"
-                          placeholder="Enter a valid email address"
-                          id="email-b064"
-                          name="email"
-                          className="form-control"
-                          required
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <label htmlFor="message-b064" className="form-label">
-                          Message
-                        </label>
-                        <textarea
-                          placeholder="Enter your message"
-                          rows="4"
-                          cols="50"
-                          id="message-b064"
-                          name="message"
-                          className="form-control"
-                          required
-                        ></textarea>
-                      </div>
-                      <div className="mb-3">
-                        <button type="submit" className="btn btn-primary">
-                          Submit
-                        </button>
-                      </div>
-                      <div className="u-form-send-message u-form-send-success">
-                        {" "}
-                        Thank you! Your message has been sent.{" "}
-                      </div>
-                      <div className="u-form-send-error u-form-send-message">
-                        {" "}
-                        Unable to send your message. Please fix errors then try
-                        again.{" "}
-                      </div>
-                      <input type="hidden" value="" name="recaptchaResponse" />
-                      <input
-                        type="hidden"
-                        name="formServices"
-                        value="4d5c690c-3075-cf97-86b3-f33c35a2caf3"
-                      />
-                      <input
-                        type="hidden"
-                        name="siteKey"
-                        value="6LetPRgiAAAAAGX121nVdkYGTN-RfCXh4wAlbDFh"
-                      />
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+    <div className={`contact-container ${darkMode ? "dark-mode" : ""}`}>
+      <div className="left-col">
+        <img className="logo" src="./Logo.ico" alt="Logo" />
+      </div>
+      <div className="right-col">
+        <div className="theme-switch-wrapper">
+          <label className="theme-switch" htmlFor="checkbox">
+            <input type="checkbox" id="checkbox" onChange={handleThemeToggle} />
+            <div className="slider round"></div>
+          </label>
+          <div className="description">Dark Mode</div>
         </div>
-      </section>
+        <h1>Contact us</h1>
+        <h5>
+          We are here to help you!
+        </h5>
+        <form id="contact-form" onSubmit={handleSubmit}>
+          <label htmlFor="name">Full name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Your Full Name"
+            required
+          />
+          <label htmlFor="email">Email Address</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Your Email Address"
+            required
+          />
+          <label htmlFor="message">Message</label>
+          <textarea
+            rows="6"
+            placeholder="Your Message"
+            id="message"
+            name="message"
+            required
+          ></textarea>
+          <button type="submit" id="submit" name="submit">
+            Send
+          </button>
+        </form>
+        <div id="error"></div>
+        <div id="success-msg"></div>
+      </div>
     </div>
   );
 };

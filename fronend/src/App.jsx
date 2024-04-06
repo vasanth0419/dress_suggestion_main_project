@@ -9,9 +9,9 @@ import Register from "./components/Register";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import Error from "./components/layouts/Error";
 import Trends from "./components/Trends";
+import Contactus from "./components/Contactus";
 
 const App = () => {
-  
   return (
     <div>
       <BrowserRouter>
@@ -23,7 +23,9 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/forgetPassword" element={<Forgetpassword />} />
           <Route path="/resetpassword/:token" element={<Resetpassword />} />
-          <Route path="/trends" element={<Trends/>}/>
+          <Route path="/trends" element={<Trends />} />
+
+          <Route path="/contactus" element={<Contactus />} />
 
           {/* error */}
           <Route path="*" element={<Error />} />

@@ -74,9 +74,9 @@ const Navbar = () => {
                   </ul>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link mx-2" href="#">
+                  <Link className="nav-link mx-2" to="/contactus">
                     Contact Us
-                  </a>
+                  </Link>
                 </li>
               </ul>
               <Link to="/login">
