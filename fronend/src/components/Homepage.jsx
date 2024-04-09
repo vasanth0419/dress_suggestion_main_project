@@ -93,7 +93,7 @@ const Homepage = () => {
         </div>
       </div>
       {/* <Footer /> */}
-      <Contactus/>
+      
       <Footerpage />
     </div>
   );
