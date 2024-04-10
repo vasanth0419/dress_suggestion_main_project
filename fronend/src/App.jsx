@@ -10,6 +10,8 @@ import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import Error from "./components/layouts/Error";
 import Trends from "./components/Trends";
 import Contactus from "./components/Contactus";
+import Dresses from "./components/Dresses";
+import CartPage from "./components/Cartpage";
 
 const App = () => {
   return (
@@ -24,11 +26,12 @@ const App = () => {
           <Route path="/forgetPassword" element={<Forgetpassword />} />
           <Route path="/resetpassword/:token" element={<Resetpassword />} />
           <Route path="/trends" element={<Trends />} />
-
+          <Route path="/dresses" element={<Dresses />} />
           <Route path="/contactus" element={<Contactus />} />
+          <Route path="/cartpage" element={<CartPage />} />
 
           {/* error */}
-          <Route path="*" element={<Error />} />
+          {/* <Route path="*" element={<Error />} /> */}
         </Routes>
       </BrowserRouter>
     </div>

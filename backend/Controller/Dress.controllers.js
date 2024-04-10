@@ -24,8 +24,8 @@ export const createDress = async (req, res) => {
 
 export const getalldress = async (req, res) => {
   try {
-    const dresses = await Dress.find();
-    res.json(dresses);
+    const dress = await Dress.find();
+    res.json(dress);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
