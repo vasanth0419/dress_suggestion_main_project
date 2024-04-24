@@ -6,8 +6,9 @@ import * as Yup from "yup";
 import "react-toastify/dist/ReactToastify.css";
 import userServices from "../../services/userservices.js";
 
-const Loginpage = () => {
+const Loginpage = ({ setIsLoggedIn }) => {
   const [showPassword, setShowPassword] = useState(false);
+
   const navigate = useNavigate();
 
   // Initial values for form fields
@@ -40,20 +41,27 @@ const Loginpage = () => {
           values.email,
           values.password
         );
-
+        console.log("API response:", response);
         // Check if the response exists and if it contains a success property
-        if (response) {
-          // If login is successful, display success message and redirect the user
-          toast.success(response.message);
+        if (
+          response &&
+          response.data &&
+          response.data.message === "login successful"
+        ) {
+          // If login is successful, set isLoggedIn to true and redirect the user
+          console.log(response);
           navigate("/");
+          setIsLoggedIn(true);
+          toast.success("Login successful");
+
           resetForm();
-        } else {
-          // If login failed, display error message
-          toast.error(
-            response.message || "Login failed. Please check your credentials."
-          );
-        }
+        } else  {
+          console.log(response);
+          // If the response contains a specific error message from the server
+          toast.error(response.data.message);
+        } 
       } catch (error) {
+        
         // If there's an error with the API call, handle it here
         console.error("Error:", error);
         toast.error(
@@ -202,7 +210,6 @@ const Loginpage = () => {
                                 >
                                   Login now
                                 </button>
-                                <ToastContainer />
                               </div>
                             </div>
                           </div>
@@ -237,6 +244,7 @@ const Loginpage = () => {
           </div>
         </div>
       </section>
+      <ToastContainer />
     </div>
   );
 };

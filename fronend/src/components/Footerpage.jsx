@@ -1,5 +1,6 @@
 import React from "react";
 import "./style.css/Footer.css"; // Import your CSS file
+import { Link } from "react-router-dom";
 
 const Footerpage = () => {
   return (
@@ -10,13 +11,15 @@ const Footerpage = () => {
             <div className="col-sm-12 col-md-6">
               <h6>About</h6>
               <p className="text-justify">
-                Scanfcode.com <i>CODE WANTS TO BE SIMPLE </i> is an initiative
-                to help the upcoming programmers with the code. Scanfcode
-                focuses on providing the most efficient code or snippets as the
-                code wants to be simple. We will help programmers build up
-                concepts in different programming languages that include C, C++,
-                Java, HTML, CSS, Bootstrap, JavaScript, PHP, Android, SQL and
-                Algorithm.
+                Discover the epitome of elegance at <i>Women's Fix</i>, where
+                every stitch is tailored to empower. From timeless classics to
+                trendsetting pieces, our curated collection celebrates the
+                essence of femininity. Embrace confidence with our range of
+                dresses, designed to accentuate your unique style. With
+                unparalleled quality and attention to detail, Women's Fix is
+                your destination for sartorial sophistication. Redefine fashion
+                on your terms with every click, because at Women's Fix, every
+                woman is her own muse.
               </p>
             </div>
 
@@ -24,30 +27,25 @@ const Footerpage = () => {
               <h6>Categories</h6>
               <ul className="footer-links">
                 <li>
-                  <a href="http://scanfcode.com/category/c-language/">C</a>
+                  <Link to="/formaldress">Formal Dresses</Link>
                 </li>
                 <li>
-                  <a href="http://scanfcode.com/category/front-end-development/">
-                    UI Design
-                  </a>
+                  <Link to="/casualdress">Casual Dresses</Link>
                 </li>
                 <li>
-                  <a href="http://scanfcode.com/category/back-end-development/">
-                    PHP
-                  </a>
+                  <Link to="/rompers">Rompers</Link>
                 </li>
                 <li>
-                  <a href="http://scanfcode.com/category/java-programming-language/">
-                    Java
-                  </a>
+                  <Link to="/jumpsuits">Jumpsuits</Link>
                 </li>
                 <li>
-                  <a href="http://scanfcode.com/category/android/">Android</a>
+                  <Link to="/tops">Tops</Link>
                 </li>
                 <li>
-                  <a href="http://scanfcode.com/category/templates/">
-                    Templates
-                  </a>
+                  <Link to="/pants">Pants</Link>
+                </li>
+                <li>
+                  <Link to="/skirts">Skirts</Link>
                 </li>
               </ul>
             </div>
@@ -56,23 +54,21 @@ const Footerpage = () => {
               <h6>Quick Links</h6>
               <ul className="footer-links">
                 <li>
-                  <a href="http://scanfcode.com/about/">About Us</a>
+                  <Link to="#">About Us</Link>
                 </li>
                 <li>
-                  <a href="http://scanfcode.com/contact/">Contact Us</a>
+                  <Link to="/contactus">Contact Us</Link>
                 </li>
                 <li>
-                  <a href="http://scanfcode.com/contribute-at-scanfcode/">
-                    Contribute
+                  <Link to="#">Contribute</Link>
+                </li>
+                <li>
+                  <Link to="#">Privacy Policy</Link>
+                </li>
+                <li>
+                  <a href="https://maps.app.goo.gl/tAPiHb15WbJSmyZi7">
+                    Sitemap
                   </a>
-                </li>
-                <li>
-                  <a href="http://scanfcode.com/privacy-policy/">
-                    Privacy Policy
-                  </a>
-                </li>
-                <li>
-                  <a href="http://scanfcode.com/sitemap/">Sitemap</a>
                 </li>
               </ul>
             </div>

@@ -9,9 +9,9 @@ const Homepage = () => {
     <div>
       <div className="container-fluid">
         {/* 1st - content */}
-        <div class="index-main-img">
-          <img src="./img/off-the-wall.jpg" alt="" />
-        </div>
+
+        <img class="index-main-img" src="./img/off-the-wall.jpg" alt="" />
+
         <br />
         {/* 2st - content */}
 
@@ -21,13 +21,15 @@ const Homepage = () => {
               <div className="col-md-6 px-0">
                 <div className="text-center pt-5 pe-5 m-1">
                   <p className="lead my-3 font-italic ">
-                    "Welcome to our sanctuary of style and comfort! Browse our
-                    curated selection of women's fashion, where elegance meets
-                    versatility. Discover timeless classics and contemporary
-                    trends tailored to suit every taste. Experience the joy of
-                    effortless shopping and elevate your wardrobe with pieces
-                    that empower and inspire. Join us on a journey of
-                    self-expression through fashion. Welcome home."
+                    "Welcome to Women's Fix Daily Dress Color Suggestions!
+                    Elevate your style effortlessly with our curated color
+                    recommendations tailored for the modern woman. From vibrant
+                    hues that exude confidence to soft tones that radiate
+                    elegance, we're here to inspire your wardrobe every day. Say
+                    goodbye to fashion dilemmas and hello to effortless chic
+                    with our daily picks. Let's paint your world with hues that
+                    reflect your unique personality and empower your style
+                    journey."
                   </p>
                   <p className="lead mb-0">
                     <a href="#" className="text-white font-weight-bold">
@@ -40,7 +42,7 @@ const Homepage = () => {
                 <img
                   className=" rounded pt-4 ps-3"
                   style={{ width: "100%", height: "90%" }}
-                  src="/img/1stcontent.jpg"
+                  src="/img/colors.webp"
                   alt="Dress collection"
                 />
               </div>
@@ -51,18 +53,18 @@ const Homepage = () => {
 
         {/* ///// */}
         <div class="index-grid-img-1">
-          <Link>
+          <p>
             <img src="./img/anton-levin-P8prss71psk-unsplash.jpg" alt="" />
             <h4 class="info-of-img-below">For the Young, Wild & Stylish</h4>
-          </Link>
-          <Link>
+          </p>
+          <p>
             <img src="./img/calvin-lupiya--yPg8cusGD8-unsplash.jpg" alt="" />
             <h4 class="info-of-img-below">Just like your way to Conquer</h4>
-          </Link>
-          <Link>
+          </p>
+          <p>
             <img src="./img/sun.jpg" alt="" />
             <h4 class="info-of-img-below">Stands out like the Sun</h4>
-          </Link>
+          </p>
         </div>
         {/* //////// */}
 
@@ -93,7 +95,7 @@ const Homepage = () => {
         </div>
       </div>
       {/* <Footer /> */}
-      
+
       <Footerpage />
     </div>
   );

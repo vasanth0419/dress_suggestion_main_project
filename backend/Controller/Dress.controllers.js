@@ -61,8 +61,6 @@ export const updatedress = async (req, res) => {
   }
 };
 
-
-
 // delete dress by id
 
 export const deletedress = async (req, res) => {
@@ -72,6 +70,17 @@ export const deletedress = async (req, res) => {
       return res.status(404).json({ message: "Dress not found" });
     }
     res.json({ message: "Dress deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const addcart = async (req, res) => {
+  try {
+    const { name, price, quantity } = req.body;
+    const newItem = new CartItem({ name, price, quantity });
+    await newItem.save();
+    res.status(201).json(newItem);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

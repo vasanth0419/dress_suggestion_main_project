@@ -74,7 +74,7 @@ export const loginUser = async (req, res) => {
 
 export const getUserById = async (req, res) => {
   try {
-    const userId = req.params.userId; 
+    const userId = req.params.userId;
 
     const user = await User.findById(userId).select("-passwordHash -__v -_id");
 
@@ -87,8 +87,6 @@ export const getUserById = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
-
 
 // logout user api
 
@@ -114,7 +112,7 @@ export const forgetPassword = async (req, res) => {
     }
 
     // Generate a unique token for password reset using JWT
-    const token = jwt.sign({ email }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ email, id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
 
@@ -124,7 +122,7 @@ export const forgetPassword = async (req, res) => {
     await user.save();
 
     // Send email with password reset link
-    const resetLink = `http://localhost:3000/resetpassword/${token}`;
+    const resetLink = `http://localhost:3000/resetpassword/${user.id}/${token}`;
     await sendEmail(
       email,
       "Password Reset",
@@ -138,49 +136,83 @@ export const forgetPassword = async (req, res) => {
   }
 };
 
-
-// reset password api
+//reset password api
 
 export const resetPassword = async (req, res) => {
-  const { token, newPassword } = req.body;
-
   try {
-    // Verify and decode the reset token
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    const { id, token } = req.params;
+    const { newPassword } = req.body;
 
-    // Find user by email
-    const user = await User.findOne({ email: decodedToken.email });
+    // Validate token, user ID, and new password
+    if (!token || !id || !newPassword) {
+      return res
+        .status(400)
+        .json({ message: "Invalid token, user ID, or new password" });
+    }
+
+    // Find the user by ID
+    const user = await User.findById(id);
+
+    // Check if the user exists
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Check if the token has expired
-    if (Date.now() > user.resetPasswordExpires) {
-      return res.status(400).json({ message: "Token expired" });
+    // If token exists, it's a password reset request
+    if (token) {
+      // Check if the reset token matches the one stored in the user document
+      if (user.resetToken !== token) {
+        return res.status(400).json({ message: "Invalid reset token" });
+      }
+
+      // Check if the token has expired
+      if (Date.now() > user.resetPasswordExpires) {
+        return res.status(400).json({ message: "Token expired" });
+      }
+
+      // Hash the new password
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+      // Update user's password and reset token in the database
+      user.password = hashedPassword;
+      user.resetToken = null;
+      user.resetPasswordExpires = null;
+      await user.save();
+
+      return res.status(200).json({ message: "Password reset successfully" });
+    } else {
+      // Update password request
+      // Verify and decode the reset token
+      const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+
+      // Find user by email
+      const user = await User.findOne({ email: decodedToken.email });
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // Hash the new password
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+      // Update user's password in the database
+      user.password = hashedPassword;
+      await user.save();
+
+      return res.status(200).json({ message: "Password updated successfully" });
     }
-
-    // Hash the new password
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
-
-    // Update user's password and reset token in the database
-    user.password = hashedPassword;
-    user.resetPasswordToken = null;
-    user.resetPasswordExpires = null;
-    await user.save();
-
-    res.status(200).json({ message: "Password reset successfully" });
   } catch (error) {
-    console.error("Error resetting password:", error);
+    console.error("Error resetting/updating password:", error);
     if (
       error.name === "JsonWebTokenError" ||
       error.name === "TokenExpiredError"
     ) {
       res.status(400).json({ message: "Invalid or expired token" });
     } else {
-      res.status(500).json({ message: "Failed to reset password" });
+      res.status(500).json({ message: "Failed to reset/update password" });
     }
   }
 };
+
 
 // delete user
 
@@ -200,10 +232,6 @@ export const deleteUserById = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
-
-
-
 
 //admin user
 

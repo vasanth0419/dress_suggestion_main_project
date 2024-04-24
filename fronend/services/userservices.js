@@ -10,7 +10,7 @@ const userServices = {
       password,
     };
     // send a POST request to the API
-    return instance.post("/user/login", data, { withCredentials: true });
+    return instance.post("/user/login", data);
   },
   // define the register method
   signup: async (username, email, password) => {
@@ -31,7 +31,7 @@ const userServices = {
   // reset password
   resetpassword: async (token, newPassword) => {
     const data = { token, newPassword };
-    return instance.put("/user/resetpassword/:token", data);
+    return instance.put("/user/resetpassword/:id/:token", data);
   },
   // get the currently logged in user
   getUser: async () => {

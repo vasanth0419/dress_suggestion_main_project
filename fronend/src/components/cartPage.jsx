@@ -1,257 +1,129 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const CartPage = () => {
+const Cartpage = ({
+  cartItems = [],
+  removeFromCart,
+  increaseQuantity,
+  decreaseQuantity,
+}) => {
+  const calculateTotal = () => {
+    return cartItems.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
+    );
+  };
+
   return (
     <div>
       <section className="h-100 gradient-custom">
         <div className="container py-5">
           <div className="row d-flex justify-content-center my-4">
             <div className="col-md-8">
+              {/* Your cart items rendering */}
               <div className="card mb-4">
                 <div className="card-header py-3">
-                  <h5 className="mb-0">Cart - 2 items</h5>
+                  <h5 className="mb-0">Cart - {cartItems.length} items</h5>
                 </div>
                 <div className="card-body">
-                  {/* Single item */}
-                  <div className="row">
-                    <div className="col-lg-3 col-md-12 mb-4 mb-lg-0">
-                      {/* Image */}
-                      <div
-                        className="bg-image hover-overlay hover-zoom ripple rounded"
-                        data-mdb-ripple-color="light"
-                      >
-                        <img
-                          src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Vertical/12a.webp"
-                          className="w-100"
-                          alt="Blue Jeans Jacket"
-                        />
-                        <a href="#!">
-                          <div
-                            className="mask"
-                            style={{
-                              backgroundColor: "rgba(251, 251, 251, 0.2)",
-                            }}
-                          ></div>
-                        </a>
-                      </div>
-                      {/* Image */}
-                    </div>
-
-                    <div className="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                      {/* Data */}
-                      <p>
-                        <strong>Blue denim shirt</strong>
-                      </p>
-                      <p>Color: blue</p>
-                      <p>Size: M</p>
-                      <button
-                        type="button"
-                        className="btn btn-primary btn-sm me-1 mb-2"
-                        title="Remove item"
-                      >
-                        <i className="fas fa-trash"></i>
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-danger btn-sm mb-2"
-                        title="Move to the wish list"
-                      >
-                        <i className="fas fa-heart"></i>
-                      </button>
-                      {/* Data */}
-                    </div>
-
-                    <div className="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                      {/* Quantity */}
-                      <div
-                        className="d-flex mb-4"
-                        style={{ maxWidth: "300px" }}
-                      >
-                        <button
-                          className="btn btn-primary px-3 me-2"
-                          onClick={(e) =>
-                            e.target.parentNode
-                              .querySelector("input[type=number]")
-                              .stepDown()
-                          }
-                        >
-                          <i className="fas fa-minus"></i>
-                        </button>
-                        <div className="form-outline">
-                          <input
-                            id="form1"
-                            min="0"
-                            name="quantity"
-                            defaultValue="1"
-                            type="number"
-                            className="form-control"
+                  {cartItems.map((cartItem) => (
+                    <div key={cartItem._id} className="row mb-4">
+                      <div className="col-lg-3 col-md-12 mb-4 mb-lg-0">
+                        <div className="bg-image hover-overlay hover-zoom ripple rounded">
+                          <img
+                            src={cartItem.image}
+                            className="w-100"
+                            alt={cartItem.name}
                           />
-                          <label className="form-label" htmlFor="form1">
-                            Quantity
-                          </label>
+                          <a href="#!">
+                            <div
+                              className="mask"
+                              style={{
+                                backgroundColor: "rgba(251, 251, 251, 0.2)",
+                              }}
+                            ></div>
+                          </a>
                         </div>
+                      </div>
+                      <div className="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                        <p>
+                          <strong>{cartItem.name}</strong>
+                        </p>
+
+                        <p>Size :XS, S, L, XL, XXL</p>
+
+                        <p>
+                          <span
+                            className="fa fa-star checked"
+                            style={{ color: "gold" }}
+                          ></span>
+                          <span
+                            className="fa fa-star checked"
+                            style={{ color: "gold" }}
+                          ></span>
+                          <span
+                            className="fa fa-star checked"
+                            style={{ color: "gold" }}
+                          ></span>
+                          <span
+                            className="fa fa-star checked"
+                            style={{ color: "gold" }}
+                          ></span>
+                          <span
+                            className="fa fa-star checked"
+                            style={{ color: "gold" }}
+                          ></span>
+                        </p>
+
                         <button
-                          className="btn btn-primary px-3 ms-2"
-                          onClick={(e) =>
-                            e.target.parentNode
-                              .querySelector("input[type=number]")
-                              .stepUp()
-                          }
+                          type="button"
+                          className="btn btn-primary btn-sm me-1 mb-2"
+                          onClick={() => removeFromCart(cartItem._id)}
                         >
-                          <i className="fas fa-plus"></i>
+                          <i className="fas fa-trash"></i> Remove item
                         </button>
                       </div>
-                      {/* Quantity */}
-                      {/* Price */}
-                      <p className="text-start text-md-center">
-                        <strong>$17.99</strong>
-                      </p>
-                      {/* Price */}
-                    </div>
-                  </div>
-                  {/* Single item */}
-                  <hr className="my-4" />
-                  {/* Single item */}
-                  <div className="row">
-                    <div className="col-lg-3 col-md-12 mb-4 mb-lg-0">
-                      {/* Image */}
-                      <div
-                        className="bg-image hover-overlay hover-zoom ripple rounded"
-                        data-mdb-ripple-color="light"
-                      >
-                        <img
-                          src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Vertical/13a.webp"
-                          className="w-100"
-                          alt="Red Hoodie"
-                        />
-                        <a href="#!">
-                          <div
-                            className="mask"
-                            style={{
-                              backgroundColor: "rgba(251, 251, 251, 0.2)",
-                            }}
-                          ></div>
-                        </a>
-                      </div>
-                      {/* Image */}
-                    </div>
-
-                    <div className="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                      {/* Data */}
-                      <p>
-                        <strong>Red hoodie</strong>
-                      </p>
-                      <p>Color: red</p>
-                      <p>Size: M</p>
-                      <button
-                        type="button"
-                        className="btn btn-primary btn-sm me-1 mb-2"
-                        title="Remove item"
-                      >
-                        <i className="fas fa-trash"></i>
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-danger btn-sm mb-2"
-                        title="Move to the wish list"
-                      >
-                        <i className="fas fa-heart"></i>
-                      </button>
-                      {/* Data */}
-                    </div>
-
-                    <div className="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                      {/* Quantity */}
-                      <div
-                        className="d-flex mb-4"
-                        style={{ maxWidth: "300px" }}
-                      >
-                        <button
-                          className="btn btn-primary px-3 me-2"
-                          onClick={(e) =>
-                            e.target.parentNode
-                              .querySelector("input[type=number]")
-                              .stepDown()
-                          }
+                      <div className="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                        <div
+                          className="d-flex mb-4"
+                          style={{ maxWidth: "300px" }}
                         >
-                          <i className="fas fa-minus"></i>
-                        </button>
-                        <div className="form-outline">
-                          <input
-                            id="form2"
-                            min="0"
-                            name="quantity"
-                            defaultValue="1"
-                            type="number"
-                            className="form-control"
-                          />
-                          <label className="form-label" htmlFor="form2">
-                            Quantity
-                          </label>
+                          <button
+                            className="btn btn-primary px-3 me-2"
+                            onClick={() => decreaseQuantity(cartItem._id)}
+                          >
+                            <i className="fas fa-minus"></i>
+                          </button>
+                          <div className="form-outline">
+                            <input
+                              id="form1"
+                              min="0"
+                              name="quantity"
+                              value={cartItem.quantity}
+                              type="number"
+                              className="form-control"
+                              readOnly
+                            />
+                            <label className="form-label" htmlFor="form1">
+                              Quantity
+                            </label>
+                          </div>
+                          <button
+                            className="btn btn-primary px-3 ms-2"
+                            onClick={() => increaseQuantity(cartItem._id)}
+                          >
+                            <i className="fas fa-plus"></i>
+                          </button>
                         </div>
-                        <button
-                          className="btn btn-primary px-3 ms-2"
-                          onClick={(e) =>
-                            e.target.parentNode
-                              .querySelector("input[type=number]")
-                              .stepUp()
-                          }
-                        >
-                          <i className="fas fa-plus"></i>
-                        </button>
+                        <p className="text-start text-md-center">
+                          <strong>${cartItem.price}</strong>
+                        </p>
                       </div>
-                      {/* Quantity */}
-                      {/* Price */}
-                      <p className="text-start text-md-center">
-                        <strong>$17.99</strong>
-                      </p>
-                      {/* Price */}
                     </div>
-                  </div>
-                  {/* Single item */}
+                  ))}
                 </div>
               </div>
-              <div className="card mb-4">
-                <div className="card-body">
-                  <p>
-                    <strong>Expected shipping delivery</strong>
-                  </p>
-                  <p className="mb-0">12.10.2020 - 14.10.2020</p>
-                </div>
-              </div>
-              <div className="card mb-4 mb-lg-0">
-                <div className="card-body">
-                  <p>
-                    <strong>We accept</strong>
-                  </p>
-                  <img
-                    className="me-2"
-                    width="45px"
-                    src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
-                    alt="Visa"
-                  />
-                  <img
-                    className="me-2"
-                    width="45px"
-                    src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg"
-                    alt="American Express"
-                  />
-                  <img
-                    className="me-2"
-                    width="45px"
-                    src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
-                    alt="Mastercard"
-                  />
-                  <img
-                    className="me-2"
-                    width="45px"
-                    src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce/includes/gateways/paypal/assets/images/paypal.webp"
-                    alt="PayPal acceptance mark"
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="col-md-4">
+              {/* Cart summary */}
               <div className="card mb-4">
                 <div className="card-header py-3">
                   <h5 className="mb-0">Summary</h5>
@@ -260,7 +132,7 @@ const CartPage = () => {
                   <ul className="list-group list-group-flush">
                     <li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                       Products
-                      <span>$53.98</span>
+                      <span>${calculateTotal()}</span>
                     </li>
                     <li className="list-group-item d-flex justify-content-between align-items-center px-0">
                       Shipping
@@ -274,20 +146,22 @@ const CartPage = () => {
                         </strong>
                       </div>
                       <span>
-                        <strong>$53.98</strong>
+                        <strong>${calculateTotal()}</strong>
                       </span>
                     </li>
                   </ul>
-
-                  <button
-                    type="button"
-                    className="btn btn-primary btn-lg btn-block"
-                  >
-                    Go to checkout
-                  </button>
+                  <Link to="/success">
+                    <button
+                      type="button"
+                      className="btn btn-primary btn-lg btn-block"
+                    >
+                      Go to checkout
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>
+            <div className="col-md-4">{/* Additional content, if any */}</div>
           </div>
         </div>
       </section>
@@ -295,4 +169,4 @@ const CartPage = () => {
   );
 };
 
-export default CartPage;
+export default Cartpage;
